@@ -61,9 +61,9 @@ label2.grid(column = 1, row = 1)
 text = Text(root, width = 40, height = 20, font = ("Arial",20))
 text.insert(END, "3.")
 text.config(state = DISABLED)
-text.grid(column = 0, row = 2)
+text.grid(column = 1, row = 2)
 
-restart_button = Button(root, text  = "restart", command = reset).grid(column = 0, row = 3)
+restart_button = Button(root, text  = "restart", command = reset).grid(column = 1, row = 3)
 
-exit_button = Button(root, text = "Quit", command=root.destroy).grid(column = 0, row = 4)
+exit_button = Button(root, text = "Quit", command=root.destroy).grid(column = 1, row = 4)
 root.mainloop()
