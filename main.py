@@ -13,6 +13,7 @@ def reset():
     correct_guesses = 0
     mistakes_left = 5
     update_mistakes()
+    content_label_3.set("")
     text.config(state = NORMAL)
     text.delete('1.0', END)
     text.insert(END, "3.")
@@ -37,14 +38,14 @@ def on_text_change(var):
             elif mistakes_left == 0:
                 mistakes_left -= 1
                 content_label_2.set(f"You got {correct_guesses} digits correct")
-                text.config(state = NORMAL)
-                text.insert(END, pi[correct_guesses:20])
-                text.config(state = DISABLED)
+                content_label_3.set(f"The next 20 digits are {pi[correct_guesses:correct_guesses + 20]}")
             else:
                 mistakes_left -= 1
                 update_mistakes()
 TK_SILENCE_DEPRECATION = 1
 root = Tk()
+root.title("Pi Quiz")
+
 label1 = Label(root, text = "Enter digit:")
 label1.grid(column = 0, row = 0)
 
@@ -55,15 +56,19 @@ entry.grid(column = 0, row = 1)
 
 content_label_2 = StringVar()
 update_mistakes()
-label2 = Label(root, textvariable = content_label_2)
+label2 = Label(root, textvariable = content_label_2, font = ("Arial", 20))
 label2.grid(column = 1, row = 1)
 
-text = Text(root, width = 40, height = 20, font = ("Arial",20))
+content_label_3 = StringVar()
+label3 = Label(root, textvariable = content_label_3, font = ("Arial", 20))
+label3.grid(column = 1, row = 2)
+
+text = Text(root, width = 40, height = 20, font = ("Arial", 20))
 text.insert(END, "3.")
 text.config(state = DISABLED)
-text.grid(column = 1, row = 2)
+text.grid(column = 1, row = 3)
 
-restart_button = Button(root, text  = "restart", command = reset).grid(column = 1, row = 3)
+restart_button = Button(root, text  = "restart", command = reset).grid(column = 1, row = 4)
 
-exit_button = Button(root, text = "Quit", command=root.destroy).grid(column = 1, row = 4)
+exit_button = Button(root, text = "Quit", command=root.destroy).grid(column = 1, row = 5)
 root.mainloop()
