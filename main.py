@@ -7,6 +7,12 @@ mistakes_left = 5
 with open(FILE, 'r') as f:
     pi = f.read()
 
+def clear_text():
+    text.config(state = NORMAL)
+    text.delete('1.0', END)
+    text.insert(END, "3.")
+    text.config(state = DISABLED)
+
 def reset():
     global correct_guesses
     global mistakes_left
@@ -14,14 +20,16 @@ def reset():
     mistakes_left = 5
     update_mistakes()
     content_label_3.set("")
-    text.config(state = NORMAL)
-    text.delete('1.0', END)
-    text.insert(END, "3.")
-    text.config(state = DISABLED)
+    clear_text()
 
 def update_mistakes():
     global mistakes_left
     content_label_2.set(f"Mistakes left: {mistakes_left}")
+
+def add_text(s: str):
+    text.config(state = NORMAL)
+    text.insert(END, s)
+    text.config(state = DISABLED)
 
 def on_text_change(var):
     global mistakes_left
@@ -31,9 +39,7 @@ def on_text_change(var):
     if mistakes_left >= 0:
         if guess != "":
             if guess == pi[correct_guesses]:
-                text.config(state = NORMAL)
-                text.insert(END, guess)
-                text.config(state = DISABLED)
+                add_text(guess)
                 correct_guesses += 1
             elif mistakes_left == 0:
                 mistakes_left -= 1
@@ -42,7 +48,7 @@ def on_text_change(var):
             else:
                 mistakes_left -= 1
                 update_mistakes()
-TK_SILENCE_DEPRECATION = 1
+
 root = Tk()
 root.title("Pi Quiz")
 
@@ -71,4 +77,5 @@ text.grid(column = 1, row = 3)
 restart_button = Button(root, text  = "restart", command = reset).grid(column = 1, row = 4)
 
 exit_button = Button(root, text = "Quit", command=root.destroy).grid(column = 1, row = 5)
+
 root.mainloop()
